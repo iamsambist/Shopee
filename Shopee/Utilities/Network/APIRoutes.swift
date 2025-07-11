@@ -36,7 +36,7 @@ enum ApiRoutes: URLRequestConvertible {
                 "key": "47312294-5f9b6042c846d4d3f861c610e",
                 "q": searchKey,
                 "page": 1,
-                "per_page": 3
+                "per_page": 5
             ]
         }
     }

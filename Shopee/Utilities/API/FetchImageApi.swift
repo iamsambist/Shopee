@@ -14,16 +14,16 @@ import Alamofire
 
 protocol FetchImageAPi {
     
-    func fetchSplashImages() -> AnyPublisher<[SplashImageData], Error>
+    func fetchSplashImages(searchKey: String) -> AnyPublisher<[SplashImageData], Error>
     
 }
 
 extension FetchImageAPi {
     
-    func fetchSplashImages() -> AnyPublisher<[SplashImageData], Error> {
+    func fetchSplashImages(searchKey: String) -> AnyPublisher<[SplashImageData], Error> {
       
        return APIManager.shared.sessionManager
-            .request(ApiRoutes.fetchImages(searchKey: "girls shoping"))
+            .request(ApiRoutes.fetchImages(searchKey: searchKey))
             .validate()
             .publishDecodable(type: ResponseSplashImage.self)
             .value()

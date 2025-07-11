@@ -12,15 +12,37 @@ import Combine
 final class ViewModelSplash: ObservableObject {
     @Published var displayImage: UIImage?
     @Published var errorMessage: String?
+    @Published var moveToNextScreen: Bool = false
     private var service: SplashAPIServiceProtocol
     private var cancellables: Set<AnyCancellable> = []
+    @Published var images: [SplashImageData] = []
+    let shoppingItems = [
+        "T-shirts",
+        "Jeans",
+        "Jackets",
+        "Dresses",
+        "Sweaters",
+        "Shoes",
+        "Sneakers",
+        "Hats",
+        "Scarves",
+        "Socks",
+        "Coats",
+        "Blouses",
+        "Skirts",
+        "Shorts",
+        "Bags"
+    ]
+
     init(service: SplashAPIServiceProtocol) {
         self.service = service
     }
     
     func fetchImage() {
-        performRequest(publisher: service.fetchSplashImages()) { images in
-            
+        let searchkeyIndex = Int.random(in: 0..<self.shoppingItems.count)
+        performRequest(publisher: service.fetchSplashImages(searchKey: shoppingItems[searchkeyIndex])) { images in
+            self.images = images
+            self.moveToNextScreen = true
         }
     }
     
@@ -53,4 +75,8 @@ final class ViewModelSplash: ObservableObject {
               errorMessage = "Request failed: \(error.localizedDescription)"
           }
       }
+   func getImage() -> String {
+        let index = Int.random(in: 0..<images.count)
+       return images[index].largeImageURL ?? ""
+    }
 }
