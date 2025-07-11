@@ -3,7 +3,7 @@ import SwiftUI
 struct ViewSplash: View {
     @State private var movedDown = false
     @EnvironmentObject private var coordintor: RouteCoordinator
-    @StateObject private var viewModel = ViewModelSplash(apiService: NetworkService())
+    @StateObject private var viewModel = ViewModelSplash(service: SplashAPIService())
 
     var body: some View {
         
@@ -31,6 +31,7 @@ struct ViewSplash: View {
                 .animation(.easeInOut(duration: 1), value: movedDown)
         }
         .onAppear {
+            viewModel.fetchImage()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 movedDown = true
             }

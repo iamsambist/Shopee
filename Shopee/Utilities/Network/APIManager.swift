@@ -15,10 +15,12 @@ final class APIManager {
         let configuration = URLSessionConfiguration.af.default
         configuration.timeoutIntervalForRequest = 30
         configuration.waitsForConnectivity = true
+        let networkLogger = NetworkLogger()
         
         
         return Session(
-            configuration: configuration
+            configuration: configuration,
+            eventMonitors: [networkLogger]
         )
     }()
     

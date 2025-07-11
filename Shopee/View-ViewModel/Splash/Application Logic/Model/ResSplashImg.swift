@@ -15,7 +15,7 @@ struct ResponseSplashImage : Codable {
 
 }
 
-struct SplashImageData : Codable {
+struct SplashImageData : Codable, Identifiable {
     
     let id : Int?
     let pageURL : String?
