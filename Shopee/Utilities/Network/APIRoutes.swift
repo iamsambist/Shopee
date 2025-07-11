@@ -43,14 +43,10 @@ enum ApiRoutes: URLRequestConvertible {
     
   
     func asURLRequest() throws -> URLRequest {
-      
-        guard let url = URL(string: baseUrl) else { throw AFError.invalidURL(url: baseUrl) }
         
-       
+        guard let url = URL(string: baseUrl) else { throw AFError.invalidURL(url: baseUrl) }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
-        
-        
         if let parameters = parameters {
                   switch method {
                   case .get:
@@ -60,7 +56,8 @@ enum ApiRoutes: URLRequestConvertible {
                     
                       urlRequest = try JSONEncoding.default.encode(urlRequest, with: parameters)
                   }
-              }
-        return urlRequest
+            }
+        
+            return urlRequest
     }
 }
