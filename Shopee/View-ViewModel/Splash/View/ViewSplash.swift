@@ -25,8 +25,8 @@ struct ViewSplash: View {
                     }
                 }
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                        coordintor.navigate(to: .login)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        coordintor.navigate(to: .startScreen)
                     }
                 }
             }

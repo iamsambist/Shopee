@@ -23,6 +23,9 @@ struct ViewScreenCoordinator: View {
                 ViewLogin()
             case .signUp:
                 ViewSignUp()
+            case .startScreen:
+                StartScreenView()
+                    .environmentObject(coordinator)
             }
         }
     }

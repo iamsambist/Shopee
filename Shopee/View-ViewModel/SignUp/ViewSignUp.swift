@@ -9,7 +9,10 @@ import SwiftUI
 
 struct ViewSignUp: View {
     var body: some View {
-        Text("hello Sign Up")
+        ZStack {
+            Text("hello Sign Up")
+        }
+        .transition(.move(edge: .trailing))
     }
 }
 

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct StartScreenView: View {
+    @EnvironmentObject var coordinator: RouteCoordinator
     var body: some View {
         VStack {
             ZStack {
@@ -32,7 +33,9 @@ struct StartScreenView: View {
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 50)
             
-            CustomButton(buttonText: "Let's get started", onClick: {})
+            CustomButton(buttonText: "Let's get started", onClick: {
+                coordinator.navigate(to: .login)
+            })
                 .padding(.horizontal, 20)
                 .padding(.bottom, 10)
             
@@ -42,6 +45,11 @@ struct StartScreenView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 25, height: 25)
+                    .onTapGesture {
+                        withAnimation {
+                            coordinator.navigate(to: .signUp)
+                        }
+                    }
             }
             
         }
@@ -50,4 +58,5 @@ struct StartScreenView: View {
 
 #Preview {
     StartScreenView()
+        .environmentObject(RouteCoordinator())
 }
