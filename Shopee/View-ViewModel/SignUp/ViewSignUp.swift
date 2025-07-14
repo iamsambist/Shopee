@@ -42,9 +42,9 @@ struct ViewSignUp: View {
                                
                         }
                         .frame(width: 35, height: 35)
-                        .offset(x: 0, y: 52)
+                        .offset(x: 0, y: 30)
                     }
-                    .frame(width: 120, height: 120)
+                    .frame(width: 80, height: 80)
                     .clipShape(Circle())
                     .padding(.leading, 16)
                     .padding(.bottom, 32)
