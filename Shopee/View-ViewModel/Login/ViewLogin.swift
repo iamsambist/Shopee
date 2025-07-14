@@ -8,11 +8,56 @@
 import SwiftUI
 
 struct ViewLogin: View {
+    
+    @StateObject private var viewModel = LoginViewModel()
+    
     var body: some View {
-        Text("Hello login")
+        ZStack {
+            VStack (alignment: .leading){
+                Spacer()
+                Text("Login")
+                    .font(.system(size: 47, weight: .bold, design: .default))
+                    .padding(.leading, 20)
+                    .padding(.bottom, 20)
+                HStack {
+                    Text("Good to see you back!")
+                    Image(systemName: "heart.fill")
+                    Spacer()
+                        
+                }
+                .padding(.leading, 20)
+                
+                CustomTextField(text: $viewModel.email)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 20)
+                
+                CustomButton(onClick: {
+                    print("Login")
+                })
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
+                HStack {
+                    Spacer()
+                    Button(action: {}, label: {
+                        Text("Cancel")
+                            .foregroundColor(.gray)
+                            .font(.headline)
+                            
+                    })
+                    Spacer()
+                }
+                .padding(.bottom, 100)
+              
+            }
+        }
+        .authBackground()
+   
     }
 }
 
 #Preview {
     ViewLogin()
 }
+
+
+
