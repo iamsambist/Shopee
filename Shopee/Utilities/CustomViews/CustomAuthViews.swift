@@ -29,10 +29,11 @@ struct CustomButton: View {
 
 struct CustomTextField: View {
     @Binding var text: String
+    var placeHolderText: String = "Email"
     var body: some View {
         ZStack(alignment: .leading) {
             if text.isEmpty {
-                Text("Email")
+                Text("\(placeHolderText)")
                     .foregroundColor(.gray)
                     .padding(.leading, 12)
             }
