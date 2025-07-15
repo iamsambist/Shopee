@@ -50,5 +50,27 @@ struct CustomTextField: View {
 }
 
 #Preview {
-    CustomTextField(text: .constant(""))
+   SmallCustomButton(buttonText: "Next") {
+        
+    }
+}
+
+struct SmallCustomButton: View {
+    var buttonText: String = "Next"
+    var onClick: () -> Void
+   
+    var body: some View {
+        ZStack {
+            Text("\(buttonText)")
+                .foregroundColor(.white)
+                .font(.subheadline)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 25)
+        .background(Color.blue)
+        .cornerRadius(8)
+        .onTapGesture {
+            onClick()
+        }
+    }
 }

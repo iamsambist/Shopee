@@ -9,9 +9,8 @@ import SwiftUI
 import UIKit
 
 struct ViewSignUp: View {
-    @StateObject private var viewModel = ViewModelSignUp()
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @EnvironmentObject private var coordinator: RouteCoordinator
+    @StateObject private var viewModel = ViewModelSignUp(service: SignUpService())
 
     var body: some View {
         ZStack (alignment: .topLeading){
@@ -26,47 +25,42 @@ struct ViewSignUp: View {
                     .font(.system(size: 50, weight: .bold, design: .default))
                     .padding(.bottom, 50)
                 
-                if let selectedImage = viewModel.selectedImage {
-                    ZStack {
-                        Image(uiImage: selectedImage)
-                            .resizable()
-                            .scaledToFill()
-                        
-                        Button(action: {
-                            viewModel.selectedImage = nil
-                        }) {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.red)
-                                .background(Color.white.clipShape(Circle()))
-                                .font(.system(size: 20))
-                               
-                        }
-                        .frame(width: 35, height: 35)
-                        .offset(x: 0, y: 30)
-                    }
-                    .frame(width: 80, height: 80)
-                    .clipShape(Circle())
-                    .padding(.leading, 16)
-                    .padding(.bottom, 32)
+                if viewModel.imageUploadStatus {
+                    
+                    ViewSuccessImgUpload(viewModel: viewModel)
+                    
+                } else  {
+                    if let selectedImage = viewModel.selectedImage {
                        
-                } else {
-                    Image("uplodaphoto")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 80, height: 80)
-                        .padding(.leading, 16)
-                        .padding(.bottom, 32)
-                        .onTapGesture {
-                            viewModel.isSheetPresented.toggle()
-                        }
+                        ViewImageUp_Ed(documentName: $viewModel.avatarname, image: selectedImage, onUpload: {
+                            viewModel.uploadImage()
+                        }, onCancel: {
+                            viewModel.selectedImage = nil
+                        })
+                        .padding(.horizontal, 16)
+
+                           
+                    } else {
+                        Image("uplodaphoto")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 80, height: 80)
+                            .padding(.leading, 16)
+                            .padding(.bottom, 32)
+                            .onTapGesture {
+                                viewModel.isSheetPresented.toggle()
+                            }
+                    }
                 }
                 
-                CustomTextField(text: $email)
+                CustomTextField(text: $viewModel.email)
                     .padding(.horizontal, 16)
-                CustomTextField(text: $password, placeHolderText: "Password")
+                CustomTextField(text: $viewModel.password, placeHolderText: "Password")
                     .padding(.horizontal, 16)
                     .padding(.bottom, 30)
-                CustomButton(buttonText: "Done", onClick: {})
+                CustomButton(buttonText: "Done", onClick: {
+                    viewModel.registerUser(router: coordinator)
+                })
                     .padding(.horizontal, 16)
                     .padding(.bottom, 5)
                 HStack {

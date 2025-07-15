@@ -12,19 +12,24 @@ import Alamofire
 enum ApiRoutes: URLRequestConvertible {
     
     case fetchImages(searchKey: String)
+    case registerUser(user: UserParams)
     
     // MARK: - BASE URL
     var baseUrl: String {
         switch self {
         case .fetchImages:
             return "https://pixabay.com/api/"
+        case .registerUser(user: _):
+            return "https://api.escuelajs.co/api/v1/users/"
         }
     }
     // MARK: - METHOD
     var method : HTTPMethod {
         switch self {
         case .fetchImages:
-            return .get
+            return .GET
+        case .registerUser(user: _):
+            return .POST
         }
     }
     
@@ -38,6 +43,13 @@ enum ApiRoutes: URLRequestConvertible {
                 "page": 1,
                 "per_page": 5
             ]
+        case .registerUser(user: let user):
+            return [
+                "name": user.username,
+                "email": user.useremail,
+                "password": user.userpassword,
+                "avatar": user.userImage
+            ]
         }
     }
     
@@ -49,11 +61,9 @@ enum ApiRoutes: URLRequestConvertible {
         urlRequest.httpMethod = method.rawValue
         if let parameters = parameters {
                   switch method {
-                  case .get:
-                    
+                  case .GET:
                       urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
                   default:
-                    
                       urlRequest = try JSONEncoding.default.encode(urlRequest, with: parameters)
                   }
             }

@@ -13,13 +13,15 @@ indirect enum AppScreen: Equatable {
     case startScreen
     case login
     case signUp
+    case home
     
     static func == (lhs: AppScreen, rhs: AppScreen) -> Bool {
         switch (lhs, rhs) {
         case (.splash, .splash),
             (.startScreen, .startScreen),
             (.login, .login),
-            (.signUp, .signUp):
+            (.signUp, .signUp),
+            (.home, .home):
             return true
         default:
             return false
