@@ -8,52 +8,36 @@
 import SwiftUI
 
 struct PasswordScreen: View {
-    @State private var password: String = ""
+    @ObservedObject var viewModel: LoginViewModel
     @FocusState private var isFocused: Bool
-    
+    let onCancel: () -> Void
+
     var body: some View {
         
-        VStack {
+        VStack (alignment: .leading){
             
             Spacer()
-            Image(systemName: "lock.document.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 100, height: 100)
-                .padding(.top, 50)
-            
-            VStack {
-                HStack (spacing: 10){
-                    Rectangle()
-                        .frame(width: 45, height: 8)
-                    Rectangle()
-                        .frame(width: 45, height: 8)
-                    Rectangle()
-                        .frame(width: 45, height: 8)
-                }
-                .padding(.top, 10)
-                Text("Last Step: ")
-                    .font(.system(size: 16, weight: .bold))
-                    .padding(.bottom, 25)
+            Text("Login")
+                .font(.system(size: 47, weight: .bold, design: .default))
+                .padding(.leading, 20)
+                .padding(.bottom, 20)
+            HStack {
+                Text("Let's type a password to continue!")
+                Image(systemName: "heart.fill")
+                Spacer()
+                    
             }
-            
-            Text("Set a password to continue")
-                .padding(.bottom, 3)
-            Text("password must only contains letter and worlds in between 4 to 10 characters.")
-                .font(.system(size: 14))
-                .multilineTextAlignment(.center)
-                .foregroundColor(.gray)
-                .padding(.bottom, 30)
+            .padding(.leading, 20)
             
             ZStack {
                 VStack {
-                    if password.isEmpty {
+                    if viewModel.password.isEmpty {
                         Text("type a password")
                             .foregroundColor(.gray).opacity(0.7)
                     } else {
                         
                         HStack(spacing: 12) {
-                            ForEach(0..<min(password.count, 10), id: \.self) { _ in
+                            ForEach(0..<min(viewModel.password.count, 10), id: \.self) { _ in
                                 Circle()
                                     .frame(width: 12, height: 12)
                                     .foregroundColor(.black)
@@ -62,7 +46,7 @@ struct PasswordScreen: View {
                     }
                 }
                 
-                TextField("Password", text: $password)
+                TextField("Password", text: $viewModel.password)
                     .keyboardType(.asciiCapable)
                     .textContentType(.password)
                     .focused($isFocused)
@@ -84,11 +68,28 @@ struct PasswordScreen: View {
             )
             .padding(.horizontal, 16)
             
-            CustomButton(buttonText: "Register", onClick: {})
+            CustomButton(buttonText: "Login", onClick: {
+                viewModel.loginUser()
+            })
                 .padding(.horizontal, 16)
                 .padding(.top, 20)
-            Spacer()
+            
+            HStack {
+                Spacer()
+                Button(action: {
+                    onCancel()
+                }, label: {
+                    Text("Cancel")
+                        .foregroundColor(.gray)
+                        .font(.headline)
+                        
+                })
+                Spacer()
+            }
+            .padding(.top, 10)
+           
         }
+        .padding(.bottom, 100)
         .authBackground()
         
       
@@ -96,5 +97,5 @@ struct PasswordScreen: View {
 }
 
 #Preview {
-    PasswordScreen()
+    PasswordScreen(viewModel: LoginViewModel(), onCancel: {})
 }

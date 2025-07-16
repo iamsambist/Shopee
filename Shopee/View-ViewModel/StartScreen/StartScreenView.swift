@@ -40,7 +40,7 @@ struct StartScreenView: View {
                 .padding(.bottom, 10)
             
             HStack {
-                Text("I already have an account")
+                Text("Didn't have an account")
                 Image("arrowright")
                     .resizable()
                     .scaledToFit()

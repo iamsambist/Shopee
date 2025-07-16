@@ -68,7 +68,11 @@ struct ViewSignUp: View {
                     .padding(.bottom, 5)
                     HStack {
                         Spacer()
-                        Button(action: {}, label: {
+                        Button(action: {
+                            withAnimation {
+                                coordinator.navigateBack()
+                            }
+                        }, label: {
                             Text("Cancel")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)

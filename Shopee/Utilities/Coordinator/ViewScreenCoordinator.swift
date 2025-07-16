@@ -21,6 +21,7 @@ struct ViewScreenCoordinator: View {
                     .environmentObject(coordinator)
             case .login:
                 ViewLogin()
+                    .environmentObject(coordinator)
             case .signUp:
                 ViewSignUp()
                     .environmentObject(coordinator)
