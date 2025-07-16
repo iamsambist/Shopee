@@ -18,65 +18,69 @@ struct ViewSignUp: View {
                 .resizable()
                 .scaledToFit()
             
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Create \n Account")
-                    .padding(.top, 120)
-                    .padding(.leading, 16)
-                    .font(.system(size: 50, weight: .bold, design: .default))
-                    .padding(.bottom, 50)
-                
-                if viewModel.imageUploadStatus {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Create \n Account")
+                        .padding(.top, 120)
+                        .padding(.leading, 16)
+                        .font(.system(size: 50, weight: .bold, design: .default))
+                        .padding(.bottom, 50)
                     
-                    ViewSuccessImgUpload(viewModel: viewModel)
-                    
-                } else  {
-                    if let selectedImage = viewModel.selectedImage {
-                       
-                        ViewImageUp_Ed(documentName: $viewModel.avatarname, image: selectedImage, onUpload: {
-                            viewModel.uploadImage()
-                        }, onCancel: {
-                            viewModel.selectedImage = nil
-                        })
-                        .padding(.horizontal, 16)
-
-                           
-                    } else {
-                        Image("uplodaphoto")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 80, height: 80)
-                            .padding(.leading, 16)
-                            .padding(.bottom, 32)
-                            .onTapGesture {
-                                viewModel.isSheetPresented.toggle()
-                            }
+                    if viewModel.imageUploadStatus {
+                        
+                        ViewSuccessImgUpload(viewModel: viewModel)
+                        
+                    } else  {
+                        if let selectedImage = viewModel.selectedImage {
+                            
+                            ViewImageUp_Ed(documentName: $viewModel.avatarname, image: selectedImage, onUpload: {
+                                viewModel.uploadImage()
+                            }, onCancel: {
+                                viewModel.selectedImage = nil
+                            })
+                            .padding(.horizontal, 16)
+                            
+                            
+                        } else {
+                            Image("uplodaphoto")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 80, height: 80)
+                                .padding(.leading, 16)
+                                .padding(.bottom, 32)
+                                .onTapGesture {
+                                    viewModel.isSheetPresented.toggle()
+                                }
+                        }
                     }
-                }
-                
-                CustomTextField(text: $viewModel.email)
-                    .padding(.horizontal, 16)
-                CustomTextField(text: $viewModel.password, placeHolderText: "Password")
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 30)
-                CustomButton(buttonText: "Done", onClick: {
-                    viewModel.registerUser(router: coordinator)
-                })
+                    
+                    CustomTextField(text: $viewModel.username, placeHolderText: "Name")
+                        .padding(.horizontal, 16)
+                    CustomTextField(text: $viewModel.email)
+                        .padding(.horizontal, 16)
+                    CustomTextField(text: $viewModel.password, placeHolderText: "Password")
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 30)
+                    CustomButton(buttonText: "Done", onClick: {
+                        viewModel.registerUser(router: coordinator)
+                    })
                     .padding(.horizontal, 16)
                     .padding(.bottom, 5)
-                HStack {
-                    Spacer()
-                    Button(action: {}, label: {
-                        Text("Cancel")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                        
-                    })
-                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: {}, label: {
+                            Text("Cancel")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                            
+                        })
+                        Spacer()
+                    }
+                    
                 }
-                
-            }
-            .sheet(isPresented: $viewModel.isSheetPresented) {
-                ImagePicker(selectedImage: $viewModel.selectedImage, isImagePickerPresented: $viewModel.isSheetPresented)
+                .sheet(isPresented: $viewModel.isSheetPresented) {
+                    ImagePicker(selectedImage: $viewModel.selectedImage, isImagePickerPresented: $viewModel.isSheetPresented)
+                }
             }
         }
         .transition(.move(edge: .trailing))

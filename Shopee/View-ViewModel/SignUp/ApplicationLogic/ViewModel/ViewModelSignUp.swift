@@ -9,6 +9,7 @@ import UIKit
 import Combine
 
 final class ViewModelSignUp: ObservableObject {
+    @Published var username: String = ""
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var isSheetPresented: Bool = false
@@ -52,7 +53,7 @@ final class ViewModelSignUp: ObservableObject {
     }
     
     func registerUser(router: RouteCoordinator) {
-        let user = UserParams(username: "Sunil", useremail: email, userpassword: password, userImage: "\(avatarURL ?? "")")
+        let user = UserParams(username: username, useremail: email, userpassword: password, userImage: "\(avatarURL ?? "")")
         service.registerUser(with: user)
             .receive(on: DispatchQueue.main)
             .sink(
