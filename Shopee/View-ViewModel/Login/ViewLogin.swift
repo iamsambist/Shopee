@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ViewLogin: View {
-    
+    @EnvironmentObject private var coordinator: RouteCoordinator
     @StateObject private var viewModel = LoginViewModel()
     
     var body: some View {
@@ -38,7 +38,9 @@ struct ViewLogin: View {
                 .padding(.bottom, 20)
                 HStack {
                     Spacer()
-                    Button(action: {}, label: {
+                    Button(action: {
+                        coordinator.navigate(to: .startScreen)
+                    }, label: {
                         Text("Cancel")
                             .foregroundColor(.gray)
                             .font(.headline)
