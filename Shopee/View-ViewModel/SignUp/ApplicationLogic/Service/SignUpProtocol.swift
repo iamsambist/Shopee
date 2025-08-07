@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol SignUpProtocol: UploadImageApi, RegisterUserApi {
+protocol SignUpProtocol: UploadImageApi, RegisterUserApi, LoginUserApi {
     
 }
 

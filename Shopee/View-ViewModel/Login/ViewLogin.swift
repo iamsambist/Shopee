@@ -29,10 +29,13 @@ struct ViewLogin: View {
                 
                 CustomTextField(text: $viewModel.email)
                     .padding(.horizontal, 20)
+                    .padding(.bottom, 5)
+                CustomTextField(text: $viewModel.password, placeHolderText: "Password")
+                    .padding(.horizontal, 20)
                     .padding(.bottom, 20)
                 
                 CustomButton(onClick: {
-                    print("Login")
+                    viewModel.loginUser()
                 })
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)

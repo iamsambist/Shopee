@@ -28,6 +28,7 @@ enum APIEndpoint: String {
     
     case photoUpload = "uploadFile"
     case registerUser = "api/v1/users/"
+    case loginUser = "api/v1/auth/login"
     
 }
 

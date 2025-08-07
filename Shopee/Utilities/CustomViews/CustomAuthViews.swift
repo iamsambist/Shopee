@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomButton: View {
-    var buttonText: String = "Next"
+    var buttonText: String = "Login"
     var onClick: () -> Void
    
     var body: some View {
@@ -39,6 +39,7 @@ struct CustomTextField: View {
             }
             TextField("", text: $text)
                 .foregroundColor(.black)
+                .textInputAutocapitalization(.never)
                 .padding(.leading, 12)
         }
         .frame(maxWidth: .infinity)
