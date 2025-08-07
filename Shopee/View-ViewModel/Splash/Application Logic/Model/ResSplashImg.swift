@@ -42,38 +42,7 @@ struct SplashImageData : Codable, Identifiable {
     let noAiTraining : Bool?
     let isAiGenerated : Bool?
     let isGRated : Bool?
-    let isLowQuality : Int?
+    let isLowQuality : Bool?
     let userURL : String?
-
-    enum CodingKeys: String, CodingKey {
-
-        case id = "id"
-        case pageURL = "pageURL"
-        case type = "type"
-        case tags = "tags"
-        case previewURL = "previewURL"
-        case previewWidth = "previewWidth"
-        case previewHeight = "previewHeight"
-        case webformatURL = "webformatURL"
-        case webformatWidth = "webformatWidth"
-        case webformatHeight = "webformatHeight"
-        case largeImageURL = "largeImageURL"
-        case imageWidth = "imageWidth"
-        case imageHeight = "imageHeight"
-        case imageSize = "imageSize"
-        case views = "views"
-        case downloads = "downloads"
-        case collections = "collections"
-        case likes = "likes"
-        case comments = "comments"
-        case user_id = "user_id"
-        case user = "user"
-        case userImageURL = "userImageURL"
-        case noAiTraining = "noAiTraining"
-        case isAiGenerated = "isAiGenerated"
-        case isGRated = "isGRated"
-        case isLowQuality = "isLowQuality"
-        case userURL = "userURL"
-    }
 
 }

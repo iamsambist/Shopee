@@ -40,41 +40,27 @@ final class ViewModelSplash: ObservableObject {
     
     func fetchImage() {
         let searchkeyIndex = Int.random(in: 0..<self.shoppingItems.count)
-        performRequest(publisher: service.fetchSplashImages(searchKey: shoppingItems[searchkeyIndex])) { images in
-            self.images = images
-            self.moveToNextScreen = true
-        }
-    }
-    
-    private func performRequest<T>(
-        publisher: AnyPublisher<T, Error>,
-        successAction: @escaping (T) -> Void
-    ) {
-//        setLoadingState(true)
         
-        publisher
+        service.fetchSplashImages(searchKey: shoppingItems[searchkeyIndex])
             .receive(on: DispatchQueue.main)
             .sink(
-                receiveCompletion: { [weak self] completion in
-                    self?.handleCompletion(completion)
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        break
+                    case .failure(let error):
+                        print("Request failed: \(error.localizedDescription)")
+                    }
                 },
-                receiveValue: { value in
-                    successAction(value)
+                receiveValue: { [self] images in
+                    self.images = images
+                    self.moveToNextScreen = true
                 }
             )
             .store(in: &cancellables)
+
     }
     
-    private func handleCompletion(_ completion: Subscribers.Completion<Error>) {
-//          isLoading = false
-          
-          switch completion {
-          case .finished:
-              break
-          case .failure(let error):
-              errorMessage = "Request failed: \(error.localizedDescription)"
-          }
-      }
    func getImage() -> String {
         let index = Int.random(in: 0..<images.count)
        return images[index].largeImageURL ?? ""
